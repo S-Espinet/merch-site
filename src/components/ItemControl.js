@@ -40,9 +40,7 @@ class ItemControl extends React.Component {
 
   handleDetailsSelectedItem = (id) => {
     const selectedItem = this.state.mainItemList.filter(item => item.id === id)[0];
-    this.setState({
-      selectedItem: selectedItem
-    });
+    this.setState({selectedItem: selectedItem});
   }
 
   handleDeleteSelectedItem = (id) => {
@@ -53,16 +51,14 @@ class ItemControl extends React.Component {
     });
   }
   handleUpdateClick = () => {
-    this.setState({
-      editing:true
-    });
+    this.setState({editing:true});
   }
   handleUpdateItemInList = (itemToUpdate) => {
-    const updateMainItemList = this.state.mainItemList
+    const updatedMainItemList = this.state.mainItemList
       .filter(item => item.id !== this.state.selectedItem.id)
       .concat(itemToUpdate);
     this.setState({
-      mainItemList: updateMainItemList,
+      mainItemList: updatedMainItemList,
       editing: false, 
       selectedItem: null
     });
@@ -72,14 +68,15 @@ class ItemControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.editing) {
-      currentlyVisibleState = <EditItem item = {this.handleUpdateItemInList}/>
+      currentlyVisibleState = <EditItem item = {this.state.selectedItem}
+      onUpdateItem = {this.handleUpdateItemInList}/>
       buttonText = "Return to Item List";
     } else if (this.state.selectedItem != null) {
-      currentlyVisibleState = <ItemDetail
+      currentlyVisibleState = 
+      <ItemDetail
         item = {this.state.selectedItem}
         onClickingDelete = {this.handleDeleteSelectedItem}
-        onClickingEdit = {this.handleUpdateClick}
-      />
+        onClickingEdit = {this.handleUpdateClick} />
       buttonText= "Return to Item List";
     } else if (this.state.selectedItem != null) {
       currentlyVisibleState = <ItemDetail item = {this.state.selectedItem}/>

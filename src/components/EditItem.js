@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 
 function EditItem(props){
   const { item } = props;
+  
   function handleEditItemSubmission(event) {
     event.preventDefault();
-    props.onEditItem({
-      name: event.target.names.value, 
+    props.onUpdateItem({
+      name: event.target.name.value, 
       description: event.target.description.value, 
       quantity: event.target.quantity.value, 
       id: item.id
