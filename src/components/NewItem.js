@@ -4,18 +4,6 @@ import PropTypes from "prop-types";
 import ReusableForm from "./ReusableForm";
 
 function NewItem(props) {
-  function handleNewItemSubmission(event) {
-    event.preventDefault();
-    // console.log(event.target.name.value);
-    // console.log(event.target.description.value);
-    // console.log(event.target.quantity.value);
-    props.onNewItemCreation({
-      names: event.target.name.value, 
-      description: event.target.description.value, 
-      quantity: event.target.quantity.value, 
-      id: v4()
-    });
-  }
   return (
     <React.Fragment>
       <ReusableForm 
@@ -23,6 +11,18 @@ function NewItem(props) {
         buttonText="Submit" />
     </React.Fragment>
   );
+  function handleNewItemSubmission(event) {
+    event.preventDefault();
+    // console.log(event.target.name.value);
+    // console.log(event.target.description.value);
+    // console.log(event.target.quantity.value);
+    props.onNewItemCreation({
+      name: event.target.name.value, 
+      description: event.target.description.value, 
+      quantity: event.target.quantity.value, 
+      id: v4()
+    });
+  }
 }
 
 NewItem.propTypes = {
