@@ -85,18 +85,15 @@ console.log(props);
     });
   }
 
-  // handleSell = (itemToSell) => {
+  // handleSell = (selectedItem) => {
   //   const { dispatch } = this.props;
-  //   const { id, name, description, quantity} = itemToSell;
+  //   //const { id, name, description, quantity} = selectedItem;
   //   const action = {
   //     type: 'ADD_ITEM',
-  //     id: id,
-  //     name: name,
-  //     description: description,
-  //     quantity: quantity
+  //     selectedItem: selectedItem
   //   }
-  //   if (itemToSell.quantity > 0) {
-  //     itemToSell.quantity -= 1;
+  //   if (selectedItem.quantity > 0) {
+  //     selectedItem.quantity -= 1;
   //     dispatch(action);
   //   }
   // }
