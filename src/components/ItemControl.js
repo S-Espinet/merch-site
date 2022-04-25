@@ -3,14 +3,16 @@ import NewItem from './NewItem';
 import ItemList from './ItemList';
 import ItemDetail from './ItemDetail';
 import EditItem from './EditItem';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class ItemControl extends React.Component {
 
   constructor(props) {
     super(props);
+console.log(props);
     this.state = {
       formVisibleOnPage: false,
-      mainItemList: [],
       selectedItem: null,
       editing: false
     };
@@ -31,22 +33,34 @@ class ItemControl extends React.Component {
   }
 
   handleCreateNewItem = (newItem) => {
-    const newMainItemList = this.state.mainItemList.concat(newItem);
+    const { dispatch } = this.props;
+    const { id, name, description, quantity} = newItem;
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      name: name,
+      description: description,
+      quantity: quantity
+    }
+    dispatch(action);
     this.setState({
-      mainItemList: newMainItemList,
-      formVisibleOnPage: false,
+      formVisibleOnPage: false
     });
   }
 
   handleDetailsSelectedItem = (id) => {
-    const selectedItem = this.state.mainItemList.filter(item => item.id === id)[0];
+    const selectedItem = this.props.mainItemList[id];
     this.setState({selectedItem: selectedItem});
   }
 
   handleDeleteSelectedItem = (id) => {
-    const newMainItemList = this.state.mainItemList.filter(item => item.id !== id);
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_ITEM',
+      id: id
+    }
+    dispatch(action);
     this.setState({
-      mainItemList: newMainItemList,
       selectedItem: null
     });
   }
@@ -55,15 +69,37 @@ class ItemControl extends React.Component {
   }
 
   handleUpdateItemInList = (itemToUpdate) => {
-    const updatedMainItemList = this.state.mainItemList
-      .filter(item => item.id !== this.state.selectedItem.id)
-      .concat(itemToUpdate);
+    const { dispatch } = this.props;
+    const { id, name, description, quantity} = itemToUpdate;
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      name: name,
+      description: description,
+      quantity: quantity
+    }
+    dispatch(action);
     this.setState({
-      mainItemList: updatedMainItemList,
       editing: false, 
       selectedItem: null
     });
   }
+
+  // handleSell = (itemToSell) => {
+  //   const { dispatch } = this.props;
+  //   const { id, name, description, quantity} = itemToSell;
+  //   const action = {
+  //     type: 'ADD_ITEM',
+  //     id: id,
+  //     name: name,
+  //     description: description,
+  //     quantity: quantity
+  //   }
+  //   if (itemToSell.quantity > 0) {
+  //     itemToSell.quantity -= 1;
+  //     dispatch(action);
+  //   }
+  // }
 
   handleSell = () => {
     const selectedItem = this.state.selectedItem
@@ -95,7 +131,7 @@ class ItemControl extends React.Component {
       currentlyVisibleState = <NewItem onNewItemCreation={this.handleCreateNewItem}/>
       buttonText = "Return to Ticket List";
     } else {
-      currentlyVisibleState = <ItemList itemList = {this.state.mainItemList} onItemSelection={this.handleDetailsSelectedItem}/>;
+      currentlyVisibleState = <ItemList itemList = {this.props.mainItemList} onItemSelection={this.handleDetailsSelectedItem}/>;
       buttonText = "Add Item";
     } 
     return (
@@ -106,5 +142,15 @@ class ItemControl extends React.Component {
     );
   }
 }
+ItemControl.propTypes = {
+  mainItemList: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    mainItemList: state
+  }
+}
+ItemControl = connect(mapStateToProps)(ItemControl);
 
 export default ItemControl;

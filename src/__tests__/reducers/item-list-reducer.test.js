@@ -5,7 +5,7 @@ describe('itemListReducer', () => {
     const currentState = {
       1: {name: 'sample',
       description: 'sample description',
-      quantity: 4, 
+      quantity: '4', 
       id: 1 },
       2: {name: 'myItem',
       description: 'Just my item',
@@ -18,7 +18,7 @@ describe('itemListReducer', () => {
     name: 'sample',
     description: 'sample description',
     quantity: 4,
-    id :1
+    id: 1
   };
   test('Should return default state if there is no action type passed into the reducer', () => {
     expect(itemListReducer({}, { type: null})).toEqual({});
