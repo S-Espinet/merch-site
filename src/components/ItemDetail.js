@@ -18,7 +18,9 @@ function ItemDetail(props) {
 ItemDetail.propTypes = {
   item: PropTypes.object,
   onClickingDelete: PropTypes.func,
-  onClickingEdit: PropTypes.func
+  onClickingEdit: PropTypes.func,
+  onClickingPurchase: PropTypes.func
 };
+
 
 export default ItemDetail;

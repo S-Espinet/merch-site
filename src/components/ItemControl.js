@@ -12,7 +12,7 @@ class ItemControl extends React.Component {
       formVisibleOnPage: false,
       mainItemList: [],
       selectedItem: null,
-      editing: false 
+      editing: false
     };
   }
 
@@ -34,7 +34,7 @@ class ItemControl extends React.Component {
     const newMainItemList = this.state.mainItemList.concat(newItem);
     this.setState({
       mainItemList: newMainItemList,
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
     });
   }
 
@@ -53,6 +53,7 @@ class ItemControl extends React.Component {
   handleUpdateClick = () => {
     this.setState({editing:true});
   }
+
   handleUpdateItemInList = (itemToUpdate) => {
     const updatedMainItemList = this.state.mainItemList
       .filter(item => item.id !== this.state.selectedItem.id)
@@ -77,10 +78,10 @@ class ItemControl extends React.Component {
         item = {this.state.selectedItem}
         onClickingDelete = {this.handleDeleteSelectedItem}
         onClickingEdit = {this.handleUpdateClick} />
-      buttonText= "Return to Item List";
+      buttonText = "Return to Item List";
     } else if (this.state.selectedItem != null) {
       currentlyVisibleState = <ItemDetail item = {this.state.selectedItem}/>
-      buttonText= "Return to Item List";
+      buttonText = "Return to Item List";
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewItem onNewItemCreation={this.handleCreateNewItem}/>
       buttonText = "Return to Ticket List";
