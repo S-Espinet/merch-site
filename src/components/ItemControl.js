@@ -65,6 +65,14 @@ class ItemControl extends React.Component {
     });
   }
 
+  handleSell = () => {
+    const selectedItem = this.state.selectedItem
+    if (selectedItem.quantity > 0) {
+      selectedItem.quantity -= 1;
+      this.setState({selectedItem: selectedItem});
+    }
+  }
+
   render () {
     let currentlyVisibleState = null;
     let buttonText = null;
@@ -77,7 +85,8 @@ class ItemControl extends React.Component {
       <ItemDetail
         item = {this.state.selectedItem}
         onClickingDelete = {this.handleDeleteSelectedItem}
-        onClickingEdit = {this.handleUpdateClick} />
+        onClickingEdit = {this.handleUpdateClick} 
+        onClickingBuy = {this.handleSell}/>
       buttonText = "Return to Item List";
     } else if (this.state.selectedItem != null) {
       currentlyVisibleState = <ItemDetail item = {this.state.selectedItem}/>

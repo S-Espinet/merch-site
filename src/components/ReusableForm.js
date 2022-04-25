@@ -13,7 +13,7 @@ function ReusableForm(props) {
           type='text'
           name='description'
           placeholder='Description' />
-        <input  // stretch to increase and decrease
+        <input 
           type='number'
           name='quantity'
           placeholder='Quantity' />
