@@ -12,7 +12,6 @@ class ItemControl extends React.Component {
     super(props);
 console.log(props);
     this.state = {
-      formVisibleOnPage: false,
       selectedItem: null,
       editing: false
     };
@@ -21,17 +20,17 @@ console.log(props);
   handleClick = () => {
     if (this.state.selectedItem !== null) {
       this.setState({
-        formVisibleOnPage: false,
         selectedItem: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      }));
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
-
   handleCreateNewItem = (newItem) => {
     const { dispatch } = this.props;
     const { id, name, description, quantity} = newItem;
@@ -43,9 +42,10 @@ console.log(props);
       quantity: quantity
     }
     dispatch(action);
-    this.setState({
-      formVisibleOnPage: false
-    });
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
   }
 
   handleDetailsSelectedItem = (id) => {
@@ -85,18 +85,6 @@ console.log(props);
     });
   }
 
-  // handleSell = (selectedItem) => {
-  //   const { dispatch } = this.props;
-  //   //const { id, name, description, quantity} = selectedItem;
-  //   const action = {
-  //     type: 'ADD_ITEM',
-  //     selectedItem: selectedItem
-  //   }
-  //   if (selectedItem.quantity > 0) {
-  //     selectedItem.quantity -= 1;
-  //     dispatch(action);
-  //   }
-  // }
 
   handleSell = () => {
     const selectedItem = this.state.selectedItem
@@ -124,7 +112,7 @@ console.log(props);
     } else if (this.state.selectedItem != null) {
       currentlyVisibleState = <ItemDetail item = {this.state.selectedItem}/>
       buttonText = "Return to Item List";
-    } else if (this.state.formVisibleOnPage) {
+    } else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <NewItem onNewItemCreation={this.handleCreateNewItem}/>
       buttonText = "Return to Ticket List";
     } else {
@@ -140,12 +128,14 @@ console.log(props);
   }
 }
 ItemControl.propTypes = {
-  mainItemList: PropTypes.object
+  mainItemList: PropTypes.object,
+  formVisibleOnPage: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
-    mainItemList: state
+    mainItemList: state.mainItemList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
 ItemControl = connect(mapStateToProps)(ItemControl);

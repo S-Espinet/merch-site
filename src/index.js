@@ -4,10 +4,9 @@ import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { legacy_createStore as createStore } from 'redux';
-//import { createStore };
-import reducer from './reducers/item-list-reducer';
+import rootReducer from './reducers/index';
 import { Provider } from 'react-redux';
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 store.subscribe(() =>
 console.log(store.getState())
 );
